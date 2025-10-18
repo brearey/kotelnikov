@@ -3,13 +3,14 @@ config() // dotenv
 import express, { Application } from 'express'
 import bodyParser from 'body-parser'
 import { ApiResponse, ApiError, Event, Booking } from './types/app-types'
+import { logger } from './utils/logger'
 
 const app: Application = express()
 const PORT = process.env.SERVER_PORT || 5000
 
 app.use(bodyParser.json())
 
-app.get('/api/health', (req, res) => {
+app.get('/api/health', logger.query, (req, res) => {
 	const error: ApiError = {
 		name: 'Backend error',
 		message: 'test error'
