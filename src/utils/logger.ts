@@ -10,8 +10,8 @@ export const logger = {
 	error: (error: ApiError) => {
 		logger.instance.error(`${logger.now} | ERROR | ${error.name} ${error.message}`)
 	},
-	query: (req: Request, res: Response, next: NextFunction) => {
-		logger.instance.info(`${logger.now} | QUERY | ${req.method} | ${req.path}`)
+	request: (req: Request, res: Response, next: NextFunction) => {
+		logger.instance.info(`${logger.now} | REQUEST | ${req.method} | ${req.path}`)
 		next()
 	},
 }

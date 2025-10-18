@@ -11,8 +11,9 @@ const app: Application = express()
 const PORT = process.env.SERVER_PORT || 5000
 
 app.use(bodyParser.json())
+app.use(logger.request)
 
-app.get('/api/health', logger.query, (req, res) => {
+app.get('/api/health', (req, res) => {
 	const response: ApiResponse = {
 		success: true,
 		message: 'ok',
@@ -22,7 +23,9 @@ app.get('/api/health', logger.query, (req, res) => {
 	res.status(200).json(response)
 })
 
-app.post('/api/bookings/reserve', BookingsController.getAll)
+app.get('/api/bookings', BookingsController.getAll)
+app.post('/api/bookings/reserve', BookingsController.create)
+
 app.get('/api/events', EventsController.getAll)
 
 app.listen(PORT, () => {
