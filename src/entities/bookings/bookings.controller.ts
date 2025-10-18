@@ -32,7 +32,7 @@ export const BookingsController = {
 		} catch (e) {
 			if (e instanceof Error) {
 				logger.error(e)
-				res.status(500).json({
+				res.status(400).json({
 					success: false,
 					message: e.message,
 					data: null,
@@ -46,13 +46,32 @@ export const BookingsController = {
 		}
 	},
 	getAll: async (req: Request, res: Response) => {
-		const bookings: Booking[] | unknown = await BookingsModel.getAll()
-		const response: ApiResponse = {
-			success: true,
-			message: '',
-			data: bookings ? (bookings as Booking[]) : null,
-			errors: [],
+		try {
+			const user_id: string = String(req.query?.user_id)
+			if (!user_id) throw new Error('user_id is required')
+
+			const bookings: Booking[] | unknown = await BookingsModel.getAll(user_id)
+			const response: ApiResponse = {
+				success: true,
+				message: '',
+				data: bookings ? (bookings as Booking[]) : null,
+				errors: [],
+			}
+			res.status(200).json(response)
+		} catch (e) {
+			if (e instanceof Error) {
+				logger.error(e)
+				res.status(400).json({
+					success: false,
+					message: e.message,
+					data: null,
+					errors: [e],
+				})
+			}
+			else {
+				console.error(e)
+				res.status(500).json(e)
+			}
 		}
-		res.status(200).json(response)
 	},
 }

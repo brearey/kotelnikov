@@ -15,9 +15,13 @@ export const BookingsModel = {
 		}
 	},
 
-	getAll: async () => {
+	getAll: async (user_id: string) => {
 		try {
-			return await prisma.bookings.findMany()
+			return await prisma.bookings.findMany({
+				where: {
+					user_id: user_id
+				}
+			})
 		} catch (e) {
 			if (e instanceof Error) logger.error(e)
 			console.error(e)

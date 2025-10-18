@@ -4,7 +4,7 @@
 	"description": "Kotelnikov project",
 	"main": "index.js",
 	"scripts": {
-		"seed": "ts-node ./prisma/seed.ts",
+		"seed": "ts-node ./src/database/seed.ts",
 		"build": "tsc --build",
 		"clean": "tsc --build --clean",
 		"prod": "node ./dist/index.js",
