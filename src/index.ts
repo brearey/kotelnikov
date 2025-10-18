@@ -3,6 +3,7 @@ config() // dotenv
 import express, { Application } from 'express'
 import bodyParser from 'body-parser'
 import { BookingsController } from './entities/bookings/bookings.controller'
+import { EventsController } from './entities/events/events.controller'
 import { ApiResponse } from './types/app-types'
 import { logger } from './utils/logger'
 
@@ -22,6 +23,7 @@ app.get('/api/health', logger.query, (req, res) => {
 })
 
 app.post('/api/bookings/reserve', BookingsController.getAll)
+app.get('/api/events', EventsController.getAll)
 
 app.listen(PORT, () => {
 	console.log(`Server running at http://localhost:${PORT}`)
