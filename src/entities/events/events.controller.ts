@@ -4,7 +4,7 @@ import { ApiResponse, Event } from '../../types/app-types'
 
 export const EventsController = {
 	getAll: async (req: Request, res: Response) => {
-		const events: Event[] | unknown = await EventsModel.getAll()
+		const events: Event[] | unknown = await EventsModel.findAll()
 		const response: ApiResponse = {
 			success: true,
 			message: '',

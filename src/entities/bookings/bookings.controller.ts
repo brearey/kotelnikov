@@ -1,32 +1,48 @@
 import { type Request, type Response } from 'express'
 import { BookingsModel } from './bookings.model'
-import { ApiResponse, ApiError, Booking } from '../../types/app-types'
+import { EventsModel } from '../events/events.model'
+import { logger } from '../../utils/logger'
+import { ApiResponse, Booking } from '../../types/app-types'
 
 export const BookingsController = {
 	create: async (req: Request, res: Response) => {
 		try {
-			const { event_id, user_id } = req.body
+			const event_id = req.body?.event_id
+			const user_id = req.body?.user_id
 			if (!event_id || !user_id) {
-				const error: ApiError = {
-					name: 'Params error',
-					message: 'Params event_id and user_id required',
-				}
-				res.status(400).json(error)
+				throw new Error('Params event_id and user_id required')
+			}
+
+			if (typeof event_id !== 'number' || typeof user_id !== 'string') {
+				throw new Error('event_id and user_id must be a number and string')
 			}
 
 			const booking: Booking = { event_id, user_id }
+			const foundEvent = await EventsModel.findOne(event_id)
+			if (!foundEvent) throw new Error(`Event with ID = ${event_id} was not found`)
+			
 			const createdBooking = await BookingsModel.create(booking)
 			const response: ApiResponse = {
 				success: true,
 				message: 'Booking created successful',
-				data: createdBooking ? [(createdBooking as Booking)] : null,
+				data: createdBooking ? [createdBooking as Booking] : null,
 				errors: [],
 			}
 			res.status(201).json(response)
-		} catch(e) {
-			if (e instanceof Error) logger.error(e)
+		} catch (e) {
+			if (e instanceof Error) {
+				logger.error(e)
+				res.status(500).json({
+					success: false,
+					message: e.message,
+					data: null,
+					errors: [e],
+				})
+			}
+			else {
 				console.error(e)
-			return e
+				res.status(500).json(e)
+			}
 		}
 	},
 	getAll: async (req: Request, res: Response) => {

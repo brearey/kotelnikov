@@ -3,9 +3,22 @@ import { logger } from '../../utils/logger'
 import { Event } from '../../types/app-types'
 
 export const EventsModel = {
-	getAll: async () => {
+	findAll: async () => {
 		try {
 			return await prisma.events.findMany()
+		} catch (e) {
+			if (e instanceof Error) logger.error(e)
+			console.error(e)
+			return e
+		}
+	},
+	findOne: async (event_id: number) => {
+		try {
+			return await prisma.events.findUnique({
+				where: {
+					id: event_id
+				}
+			})
 		} catch (e) {
 			if (e instanceof Error) logger.error(e)
 			console.error(e)
