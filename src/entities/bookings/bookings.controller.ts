@@ -50,7 +50,9 @@ export const BookingsController = {
 	findAll: async (req: Request, res: Response) => {
 		try {
 			const user_id: string = String(req.query?.user_id)
-			if (!user_id) throw new Error('user_id is required')
+			if (!user_id || user_id === 'undefined' || user_id === 'null' || user_id === '') {
+				throw new Error('user_id is required')
+			}
 
 			const bookings: Booking[] | unknown = await BookingsModel.findAll(user_id)
 			const response: ApiResponse = {

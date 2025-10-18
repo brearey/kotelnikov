@@ -23,7 +23,7 @@ app.get('/api/health', (req, res) => {
 	res.status(200).json(response)
 })
 
-app.get('/api/bookings', BookingsController.getAll)
+app.get('/api/bookings', BookingsController.findAll)
 app.post('/api/bookings/reserve', BookingsController.create)
 
 app.get('/api/events', EventsController.getAll)
