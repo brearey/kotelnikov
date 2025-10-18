@@ -22,7 +22,7 @@ export const BookingsModel = {
 					AND: {
 						user_id: user_id,
 						event_id: event_id,
-					}
+					},
 				},
 			})
 		} catch (e) {

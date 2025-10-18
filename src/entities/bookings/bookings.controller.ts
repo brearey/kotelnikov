@@ -20,7 +20,7 @@ export const BookingsController = {
 			const booking: Booking = { event_id, user_id }
 			const foundEvent = await EventsModel.findOne(event_id)
 			if (!foundEvent) throw new Error(`Event with ID = ${event_id} was not found`)
-			
+
 			const foundBooking = await BookingsModel.findByUserAndEvent(user_id, event_id)
 			if (foundBooking) throw new Error(`User ${user_id} already has booking on ${event_id}`)
 
