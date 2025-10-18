@@ -21,6 +21,9 @@ export const BookingsController = {
 			const foundEvent = await EventsModel.findOne(event_id)
 			if (!foundEvent) throw new Error(`Event with ID = ${event_id} was not found`)
 			
+			const foundBooking = await BookingsModel.findByUserAndEvent(user_id, event_id)
+			if (foundBooking) throw new Error(`User ${user_id} already has booking on ${event_id}`)
+
 			const createdBooking = await BookingsModel.create(booking)
 			const response: ApiResponse = {
 				success: true,
@@ -38,19 +41,18 @@ export const BookingsController = {
 					data: null,
 					errors: [e],
 				})
-			}
-			else {
+			} else {
 				console.error(e)
 				res.status(500).json(e)
 			}
 		}
 	},
-	getAll: async (req: Request, res: Response) => {
+	findAll: async (req: Request, res: Response) => {
 		try {
 			const user_id: string = String(req.query?.user_id)
 			if (!user_id) throw new Error('user_id is required')
 
-			const bookings: Booking[] | unknown = await BookingsModel.getAll(user_id)
+			const bookings: Booking[] | unknown = await BookingsModel.findAll(user_id)
 			const response: ApiResponse = {
 				success: true,
 				message: '',
@@ -67,8 +69,7 @@ export const BookingsController = {
 					data: null,
 					errors: [e],
 				})
-			}
-			else {
+			} else {
 				console.error(e)
 				res.status(500).json(e)
 			}

@@ -6,7 +6,7 @@
 - Express,
 - Typescript,
 - PostgreSQL,
-- Prisma ORM 
+- Prisma ORM
 
 ## Запуск
 
@@ -14,8 +14,8 @@
 2. Скопируйте `.env.example` в файл `.env`, заполните свои данные
 3. Запустить базу данных postgres `docker compose up` (треубуется установленный docker)
 4. Применить миграцию создания таблиц в БД `npx prisma migrate dev`
-4. Запустить приложение `npm run dev`
-5. Добавьте тестовые мероприятия в БД командой `npm run seed`
+5. Запустить приложение `npm run dev`
+6. Добавьте тестовые мероприятия в БД командой `npm run seed`
 
 ## Работа с API
 

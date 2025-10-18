@@ -1,4 +1,4 @@
-import {type Request, type Response} from 'express'
+import { type Request, type Response } from 'express'
 import { EventsModel } from './events.model'
 import { ApiResponse, Event } from '../../types/app-types'
 
@@ -8,7 +8,7 @@ export const EventsController = {
 		const response: ApiResponse = {
 			success: true,
 			message: '',
-			data: events ? events as Event[] : null,
+			data: events ? (events as Event[]) : null,
 			errors: [],
 		}
 		res.json(response)

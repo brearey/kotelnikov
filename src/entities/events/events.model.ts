@@ -16,8 +16,8 @@ export const EventsModel = {
 		try {
 			return await prisma.events.findUnique({
 				where: {
-					id: event_id
-				}
+					id: event_id,
+				},
 			})
 		} catch (e) {
 			if (e instanceof Error) logger.error(e)
@@ -28,24 +28,24 @@ export const EventsModel = {
 	seed: async () => {
 		try {
 			const eventsArray: Event[] = [
-				{ name: 'Мероприятие 1', total_seats: 5},
-				{ name: 'Мероприятие 2', total_seats: 6},
-				{ name: 'Мероприятие 3', total_seats: 7},
-				{ name: 'Мероприятие 4', total_seats: 8},
+				{ name: 'Мероприятие 1', total_seats: 5 },
+				{ name: 'Мероприятие 2', total_seats: 6 },
+				{ name: 'Мероприятие 3', total_seats: 7 },
+				{ name: 'Мероприятие 4', total_seats: 8 },
 			]
 			const alreadySeeded = await prisma.events.findFirst({
 				where: {
 					name: eventsArray[0].name,
-				}
+				},
 			})
 			if (alreadySeeded) throw new Error('Already seeded')
 			return await prisma.events.createMany({
-				data: eventsArray
+				data: eventsArray,
 			})
 		} catch (e) {
 			if (e instanceof Error) return logger.error(e)
 			console.error(e)
 			return e
 		}
-	}, 
+	},
 }
