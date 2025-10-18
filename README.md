@@ -13,10 +13,11 @@
 1. Склонируйте проект `git clone https://github.com/brearey/kotelnikov.git`
 2. Скопируйте `.env.example` в файл `.env`, заполните свои данные
 3. Запустить базу данных postgres `docker compose up` (треубуется установленный docker)
-4. Применить миграцию создания таблиц в БД `npx prisma migrate dev`
-5. Запустить приложение `npm run dev`
+4. Установить зависимости `npm install`
+5. Применить миграцию создания таблиц в БД `npx prisma migrate dev`
 6. Добавьте тестовые мероприятия в БД командой `npm run seed`
-7. Запустить тесты для проверки всех эндпоинтов `npm run test`
+7. Запустить приложение `npm run dev` или `npm run build && npm run prod`
+8. Запустить тесты для проверки всех эндпоинтов `npm run test`
 
 ## Работа с API
 
