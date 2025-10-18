@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model events {
+  id Int @id @default(autoincrement())
+	name String @default("Какое-то мероприятие")
+  total_seats Int @default(0)
+}
+
+model bookings {
+  id Int @id @default(autoincrement())
+	event_id Int
+	user_id String
+  created_at DateTime @default(now())
+}
+
+/*
+Таблица events:
+
+- id (SERIAL PRIMARY KEY)
+- name (VARCHAR)
+- total_seats (INT)
+
+Таблица bookings:
+
+- id (SERIAL PRIMARY KEY)
+- event_id (INT, ссылка на events)
+- user_id (VARCHAR)
+- created_at (TIMESTAMP)
+
+*/
